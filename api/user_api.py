@@ -65,3 +65,18 @@ async def DeleteTransaksiById(
         return RespApp(status="02", message=f"{e}", data=None)
     
     return RespApp(status="00", message="success", data=out_resp)
+
+@router.get("/get-list-tgl-transaksi")
+async def GetListTglTransaksi(
+    page: int = 0,
+    limit: int = 10,
+    nama_item: str = None,
+    dari_tgl: int = None,
+    sampai_tgl: int = None,
+    db: AsyncSession = Depends(get_async_session)
+    ):
+    out_resp, e = await user_crud.get_list_tgl_transaksi(page, limit, nama_item, dari_tgl, sampai_tgl, db)
+    if e != None:
+        return RespApp(status="02", message=f"{e}", data=None)
+    
+    return RespApp(status="00", message="success", data=out_resp)

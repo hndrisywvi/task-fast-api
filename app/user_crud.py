@@ -96,3 +96,19 @@ async def delete_transaksi_by_id(no_id, db_session:AsyncSession):
 
         except Exception as e:
             return None, e
+
+async def get_list_tgl_transaksi(page: int, limit:int, nama_item:str, dari_tgl:int, sampai_tgl:int, db_session:AsyncSession):
+    async with db_session as session:
+        try:  
+
+            resgetListTglTransaksi, e = await user_datastore.getListTglTransaksi(page, limit, nama_item, dari_tgl, sampai_tgl, session)
+            if e != None:
+                raise Exception(f"{e}")
+            
+            await session.commit()
+
+            return resgetListTglTransaksi, None
+
+
+        except Exception as e:
+            return None, e
